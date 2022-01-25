@@ -14,6 +14,16 @@ $this->dataBase,$this->puerto);
 $this->conector->set_charset("utf-8"); 
 }
 
+public function getConection(){return $this->conector;}
 }
 
+?>
+<?php
+/// Realizando prueba de la conexión
+$con = new Conexion();
+if($con->getConection()){
+echo "Conexion exitoso";  
+}else{
+echo "error en la conexion";
+}
 ?>
