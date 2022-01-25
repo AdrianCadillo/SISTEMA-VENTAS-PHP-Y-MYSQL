@@ -7,6 +7,7 @@ private $puerto="3306";/// puede cambiar
 private $server="localhost";
 private $dataBase="usuarios";
 private $conector;
+public $sql; public $pps;public $rs;
 
 public function __construct(){
 $this->conector = new mysqli($this->server,$this->usuario,$this->pasword,
@@ -15,15 +16,23 @@ $this->conector->set_charset("utf-8");
 }
 
 public function getConection(){return $this->conector;}
+
+/// Cerramos la conexión a la base de datos 
+public function CerrarBD(){
+if($this->conector!=null){
+$this->conector->close();    
+}
+if($this->pps!=null){
+$this->pps->close();    
+}
+if($this->rs!=null){
+$this->rs->close();    
+}
+    
 }
 
-?>
-<?php
-/// Realizando prueba de la conexión
-$con = new Conexion();
-if($con->getConection()){
-echo "Conexion exitoso";  
-}else{
-echo "error en la conexion";
 }
+ 
+ 
+
 ?>
