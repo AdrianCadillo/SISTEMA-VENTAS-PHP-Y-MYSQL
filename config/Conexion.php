@@ -6,7 +6,7 @@ private $pasword="software24";/// cambias tu password de tu MySQL
 private $puerto="3306";/// puede cambiar
 private $server="localhost";
 private $dataBase="usuarios";
-private $conector;
+private $conector;public $query;
 public $sql; public $pps;public $rs;
 
 public function __construct(){

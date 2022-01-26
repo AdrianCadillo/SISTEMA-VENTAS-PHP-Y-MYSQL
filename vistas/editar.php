@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <?php
-  session_start();
+   session_start();
+require '../config/Controlador.php';
+require '../Dao/PersonasDao.php';
+$control = new Controlador();
+$daoPersonas = new PersonasDao();
+  /// validando la URL
+  if(isset($_GET['ID']) and $_GET['ID']!=null){
+  $ID=$_GET['ID'];
+  $sqlData = "SELECT *FROM personas WHERE id_persona=?";
+  $filas=$control->existeDato($sqlData,$ID);
+  if($filas==0){ header("Location:listado.php");}
+  }else{
+   header("Location:listado.php");
+  }
 ?>
 <html lang="en">
 <head>
@@ -17,31 +30,23 @@
   <div class="col-xl-6 col-lg-6 col-md-5 col-sm-10 col-12">
   <div class="card shadow"> 
   <div class="card-title m-1">
-  <h4 class="float-start">Registro de Personas</h4> 
+  <h4 class="float-start">Edición de Personas</h4> 
   <span class="float-end"><a href="listado.php" class="btn btn-primary btn-sm">Ver Personas</a></span>
   </div>
   <div class="card-body">
    <form action="../Controllers/C_Personas.php" method="POST">
-  <div class="form-group">
-   <label for="txt-dni">DNI (*) </label>
-   <input type="text" id="txt-dni" name="txt-documento" class="form-control" placeholder="# dni..">    
-  </div> 
-  <div class="form-group">
-   <label for="txt-apellidos">APELLIDOS (*) </label>
-   <input type="text" id="txt-apellidos" name="txt-lastname" class="form-control" placeholder="Apellidos completos..">    
-  </div> 
-  <div class="form-group">
-   <label for="txt-name">NOMBRES (*) </label>
-   <input type="text" id="txt-name" name="txt-nombres" class="form-control" placeholder="Nombres completos..">    
-  </div>
+    <input type="text" hidden="" name="txt-id" value="<?php echo $ID;?>">
+    <?php
+    $daoPersonas->buscarPorId($ID);
+    ?>
   <div class="row justify-content-center mt-3">
-  <input type="submit" class="btn btn-success col-4" id="btn-save" name="btn-guardar" value="Guardar">
+  <input type="submit" class="btn btn-success col-4" id="btn-edit-save" name="btn-guardar-edit" value="Guardar Cambios">
   </div> 
   <div class="row text-center mt-3">
   <?php 
-  if(isset($_SESSION['mensaje'])){
-  if($_SESSION['mensaje']!=null){
-    echo $_SESSION['mensaje'];       
+  if(isset($_SESSION['mensaje-edit'])){
+  if($_SESSION['mensaje-edit']!=null){
+    echo $_SESSION['mensaje-edit'];       
   } 
   }
   ?>
